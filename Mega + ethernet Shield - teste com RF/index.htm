@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>MeaSys</title>
+
+		<meta name="viewport" content="width=decive-width; initial-scale=1; maximum-scale=1">
+
+		<script type="text/javascript">
+			function LerSensores(){
+				var request = new XMLHttpRequest();
+				request.onreadystatechange = function(){
+					if(this.readyState == 4){
+						if(this.status == 200){
+							if(this.responseText != null){
+								var dados = this.responseText.split('|');
+								document.getElementById("sensor1").innerHTML = dados[0];
+								document.getElementById("sensor2").innerHTML = dados[1];
+								if(dados[2] == 0){
+									document.getElementById("botao1").style.backgroundColor = "#FF9696";
+								}
+								else{
+									document.getElementById("botao1").style.backgroundColor = "#ADFF85";
+								}
+								if(dados[3] == 0){
+									document.getElementById("botao2").style.backgroundColor = "#FF9696";
+								}
+								else{
+									document.getElementById("botao2").style.backgroundColor = "#ADFF85";
+								}
+								
+							}
+						}
+					}
+				}
+				request.open("GET", "ajax_LerDados", true);
+				request.send(null);
+				setTimeout('LerSensores()', 60000);
+			}
+			
+						
+			function BotaoCarga1(){
+				var request = new XMLHttpRequest();
+				request.open("GET", "ajax_carga1", true);
+				request.send(null);
+				
+			}
+			function BotaoCarga2(){
+				var request = new XMLHttpRequest();
+				request.open("GET", "ajax_carga2", true);
+				request.send(null);
+				
+			}
+		</script>
+
+		<style type="text/css">
+		div > h2 {
+			color: #00979C;
+		}
+		body {
+			font-family: Arial;
+			margin: 0px;
+		}
+		.header{
+			width: 100%;
+			height: 110px;
+			border: 10px;
+			background-color: #F6F9F9;
+			margin-top: 0px;
+		}
+		.quadrado{
+			border-style: solid;
+			border-color: #00979C;
+			background-color: #F6F9F9;
+			width: 180px;
+			height: 150px;
+			text-align: center;
+			display: inline-block;
+			margin-bottom: 5px;
+		}
+		h5{
+			margin-top: 40px;
+			margin-bottom: 0px;
+			color: #00979C;
+			font-size: 15px;
+		}
+		p{
+			font-size: 50px;
+			margin: 0px;
+			color: #00979C;
+		}
+		.carga{
+			font-size: 30px;
+			font-weight: bold;
+			margin-top: 30px;
+		}
+		#botao1{
+			border-style: solid;
+			border-color: #00979C;
+			background-color: #F6F9F9;
+			width: 180px;
+			height: 100px;
+			text-align: center;
+			display: inline-block;
+			margin-bottom: 5px;
+			cursor: pointer;
+		}
+		#botao2{
+			border-style: solid;
+			border-color: #00979C;
+			background-color: #F6F9F9;
+			width: 180px;
+			height: 100px;
+			text-align: center;
+			display: inline-block;
+			margin-bottom: 5px;
+			cursor: pointer;
+		}
+		</style>
+	</head>
+
+
+	<body onload="LerSensores()">
+		<center>
+			<div class="header">
+			</br>
+				<div>
+					<h2>Measurement System</h2>
+				</div>
+			</br>
+			</div>
+
+		</br>
+
+			<div class="quadrado">
+				<h5>Umidade:</h5>
+				<p id="sensor1">%</p>
+			</div>
+
+			<div class="quadrado">
+				<h5>Temperatura:</h5>
+				<p id="sensor2">*C</p>
+			</div>
+
+		</br>
+
+			<div id="botao1" onclick="BotaoCarga1()">
+				<p class="carga">LED 1</p>
+			</div>
+			
+			<div id="botao2" onclick="BotaoCarga2()">
+				<p class="carga">LED 2</p>
+			</div>
+
+		</br>
+		</br>
+		</br>
+		
+			<button type="button" onClick="LerSensores()">Atualizar</button>
+			
+		</br>
+		</br>
+		</br>
+
+
+		</center>
+	</body>
+
+
+
+</html>
